@@ -7,10 +7,13 @@ class SettingBot:
     # The name of the bot: @FyodorovBot
     # Bot token from Telegram @BotFather
     TOKEN = os_environ.get("TELEGRAM_BOT_TOKEN")
-    CHANNEL_ID = os_environ.get("TELEGRAM_CHANNEL_ID")
+    # For proxy server
+    PROXY_URL = os_environ.get("TELEGRAM_PROXY_URL")
+    PROXY_LOGIN = os_environ.get("TELEGRAM_PROXY_LOGIN")
+    PROXY_PASSWORD = os_environ.get("TELEGRAM_PROXY_PASSWORD")
 
     @staticmethod
-    def is_load(argument) -> bool:
+    def is_load(argument: str | int) -> bool:
         if argument is None:
             return False
         return True
