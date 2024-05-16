@@ -1,10 +1,11 @@
+from os import path as os_path
 from sys import stdout as sys_std_out
 
-# Date and Time formatting
-DATETIME_FORMAT = "%d-%m-%Y %I:%M:%S"
-# Logging formatting for console
-# LOGGING_FORMAT = "[%(asctime)s.%(msecs)03d] [module=%(module)s.py] [level=%(levelname)s]: %(message)s"
-LOGGING_FORMAT = "[{time}] [module={module}.py] [level={level}]: {message}"
+# Current and main working directory
+CURRENT_PATH = os_path.dirname(__file__)
+MAIN_PATH = "\\".join(CURRENT_PATH.split("\\")[:-2])
+# The directory with the database
+DB_PATH = f"{MAIN_PATH}/db/users.db"
 
 # Settings for logger
 config_map = {
