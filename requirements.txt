@@ -1,2 +1,2 @@
 loguru==0.7.2
-telebot==0.0.5
+aiogram==3.13.1

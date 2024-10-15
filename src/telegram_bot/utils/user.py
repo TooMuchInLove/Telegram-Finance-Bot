@@ -1,10 +1,17 @@
-from telebot.types import User
+from aiogram.types import CallbackQuery, Message, User
 
 
-def get_user_name(user_data: User) -> str:
-    first_name = user_data.first_name
-    last_name = user_data.last_name
-    is_premium = user_data.is_premium
+def get_telegram_user_id(message: Message | CallbackQuery) -> int:
+    if isinstance(message, Message):
+        return message.from_user.id
+    return message.message.chat.id
+
+
+def get_telegram_user_name(message: Message) -> str:
+    user = message.from_user
+    first_name = user.first_name
+    last_name = user.last_name
+    is_premium = user.is_premium
 
     if first_name and not last_name:
         return f"{first_name}{_get_premium_status(is_premium)}"
@@ -16,8 +23,8 @@ def get_user_name(user_data: User) -> str:
     return f"{first_name} {last_name}{_get_premium_status(is_premium)}"
 
 
-def get_user_nick(user_data: User) -> str:
-    user_nick = user_data.username
+def get_telegram_user_nick(message: Message) -> str:
+    user_nick = message.from_user.username
 
     if not user_nick:
         return "<user_name_empty>"
@@ -25,8 +32,8 @@ def get_user_nick(user_data: User) -> str:
     return f"@{user_nick}"
 
 
-def get_user_link(user_data: User) -> str:
-    user_link = user_data.username
+def get_telegram_user_link(message: Message) -> str:
+    user_link = message.from_user.username
 
     if not user_link:
         return "#"
