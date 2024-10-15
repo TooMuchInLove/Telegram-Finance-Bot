@@ -1,11 +1,9 @@
-from sys import stderr
 from loguru import logger
 from src.configs import SettingBot, config_map
 
 
 def setting_logger() -> None:
     logger.configure(**config_map)
-    logger.add(stderr, format="{time} {level} {message}", filter="sub.module", level="INFO")
 
 
 def loading_arguments(args: SettingBot) -> None:
