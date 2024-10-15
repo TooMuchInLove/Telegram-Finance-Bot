@@ -1,12 +1,14 @@
 from dataclasses import dataclass
 
+from configs import setting_bot
+
 
 # TODO: по хорошему переделать на систему шаблнов (например, jinja2)
 
 @dataclass(slots=True, frozen=True)
 class ContainerWithStaticText:
     # ПРИВЕТСТВЕННОЕ СООБЩЕНИЕ
-    HELLO = "Привет, <b><a href='%s'>%s</a></b>\nЯ бот @FyodorovBot\n"
+    HELLO = f"Привет, <b><a href='%s'>%s</a></b>\nЯ бот @{setting_bot.NAME}\n"
     # СПИСОК КОМАНД БОТА
     LIST_COMMANDS = (
         "\n<b>Посмотрите список моих команд</b>:\n"

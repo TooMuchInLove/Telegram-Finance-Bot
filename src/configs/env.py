@@ -4,10 +4,8 @@ from dataclasses import dataclass
 
 @dataclass(slots=True, frozen=True)
 class SettingBot:
-    # The name of the bot: @FyodorovBot
-    # Bot token from Telegram @BotFather
     TOKEN = os_environ.get("TELEGRAM_BOT_TOKEN")
-    # For proxy server
+    NAME = os_environ.get("TELEGRAM_BOT_NAME")
     PROXY_URL = os_environ.get("TELEGRAM_PROXY_URL")
     PROXY_LOGIN = os_environ.get("TELEGRAM_PROXY_LOGIN")
     PROXY_PASSWORD = os_environ.get("TELEGRAM_PROXY_PASSWORD")
