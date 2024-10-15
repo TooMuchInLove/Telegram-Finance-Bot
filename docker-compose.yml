@@ -1,0 +1,18 @@
+version: "2.29.2"
+
+services:
+  service-finance-bot:
+    build:
+      dockerfile: ./Dockerfile
+    image: service_finance_bot_img
+    container_name: service-finance-bot
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '8001:8000'
+
+networks:
+  default:
+    name: local-network
+    external: true
