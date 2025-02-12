@@ -3,13 +3,16 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from loguru import logger
 
-from configs import ContainerWithStaticText as M
-from telegram_bot.utils import (
-    send_telegram_message,
-    get_telegram_user_id,
-    get_telegram_user_name,
-    get_telegram_user_link,
+from applications.handlers import (
+    AddAccountHandler,
 )
+from external_clients import (
+    FinanceApiClient,
+    AddAccountHandler,
+    AddCategoryHandler,
+    GetCategoriesHandler,
+)
+from telegram_bot.utils import get_telegram_user_id
 
 router = Router(name=__name__)
 
@@ -17,16 +20,38 @@ router = Router(name=__name__)
 @router.message(CommandStart(), flags={"middlewares": ["DIMiddleware"]})
 async def command_start(
     message: Message,
+    finance_api_client: FinanceApiClient,
 ) -> None:
     try:
         user_id = get_telegram_user_id(message)
-        user_name = get_telegram_user_name(message)
-        user_link = get_telegram_user_link(message)
-        await send_telegram_message(
-            message=message,
-            message_text=M.HELLO % (user_link, user_name),
-        )
+        await AddAccountHandler(finance_api_client).handle(message)
         logger.debug(f"The user #{user_id} executed the /start command.")
+    except Exception as error:
+        logger.exception(error)
+
+
+@router.message(Command("add_category"), flags={"middlewares": ["DIMiddleware"]})
+async def command_add_category(
+    message: Message,
+    finance_api_client: FinanceApiClient,
+) -> None:
+    try:
+        user_id = get_telegram_user_id(message)
+        await AddCategoryHandler(finance_api_client).handle(message)
+        logger.debug(f"The user #{user_id} executed the /add_category command.")
+    except Exception as error:
+        logger.exception(error)
+
+
+@router.message(Command("get_categories"), flags={"middlewares": ["DIMiddleware"]})
+async def command_get_categories(
+    message: Message,
+    finance_api_client: FinanceApiClient,
+) -> None:
+    try:
+        user_id = get_telegram_user_id(message)
+        await GetCategoriesHandler(finance_api_client).handle(message)
+        logger.debug(f"The user #{user_id} executed the /get_categories command.")
     except Exception as error:
         logger.exception(error)
 
@@ -37,12 +62,6 @@ async def command_help(
 ) -> None:
     try:
         user_id = get_telegram_user_id(message)
-        user_name = get_telegram_user_name(message)
-        user_link = get_telegram_user_link(message)
-        await send_telegram_message(
-            message=message,
-            message_text=f"{M.HELLO % (user_link, user_name)}{M.LIST_COMMANDS}",
-        )
         logger.debug(f"The user #{user_id} executed the /help command.")
     except Exception as error:
         logger.exception(error)

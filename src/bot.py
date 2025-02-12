@@ -1,5 +1,6 @@
 from aiogram import Dispatcher
 
+from external_clients import FinanceApiClient
 from telegram_bot.middlewares import DIMiddleware
 
 
@@ -7,8 +8,10 @@ class TelegramBot:
     def __init__(
         self,
         dp: Dispatcher,
+        finance_api_client: FinanceApiClient,
     ) -> None:
         self._dp = dp
+        self._finance_api_client = finance_api_client
 
     async def register_handlers(self) -> None:
         await self.setup_di()
@@ -17,5 +20,6 @@ class TelegramBot:
 
     async def setup_di(self) -> None:
         self._dp["di"] = {
-            "settings": self._dp["settings"],
+            "setting_bot": self._dp["setting_bot"],
         }
+        self._dp["finance_api_client"] = self._finance_api_client

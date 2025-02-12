@@ -5,6 +5,7 @@ from .user import (
     get_telegram_user_name,
     get_telegram_user_nick,
     get_telegram_user_link,
+    get_the_entered_words,
 )
 
 __all__ = (
@@ -15,4 +16,5 @@ __all__ = (
     "get_telegram_user_name",
     "get_telegram_user_nick",
     "get_telegram_user_link",
+    "get_the_entered_words",
 )

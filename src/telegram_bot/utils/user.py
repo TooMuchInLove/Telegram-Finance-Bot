@@ -29,7 +29,7 @@ def get_telegram_user_nick(message: Message) -> str:
     if not user_nick:
         return "<user_name_empty>"
 
-    return f"@{user_nick}"
+    return user_nick
 
 
 def get_telegram_user_link(message: Message) -> str:
@@ -39,6 +39,10 @@ def get_telegram_user_link(message: Message) -> str:
         return "#"
 
     return f"https://t.me/{user_link}"
+
+
+def get_the_entered_words(message: Message) -> list[str]:
+    return message.text.split()
 
 
 def _get_premium_status(is_premium: bool) -> str:

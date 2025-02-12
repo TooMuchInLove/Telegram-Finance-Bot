@@ -1,0 +1,44 @@
+from aiogram.types import CallbackQuery, Message
+from aiohttp import ClientResponseError as AiohttpClientResponseError
+
+from external_clients import FinanceApiClient
+from telegram_bot.utils import send_telegram_message, get_telegram_user_id, get_the_entered_words
+from .abc_handler import AbcHandler
+
+
+class AddCategoryHandler(AbcHandler):
+    def __init__(
+        self,
+        finance_api_client: FinanceApiClient,
+    ) -> None:
+        self._finance_api_client = finance_api_client
+
+    async def handle(
+        self,
+        message: Message | CallbackQuery,
+        is_update: bool = False,
+    ) -> None:
+        words = get_the_entered_words(message=message)
+        if len(words) == 1:
+            return await send_telegram_message(
+                message=message,
+                message_text="‼️Enter the name of the category!",
+            )
+
+        category_name = " ".join(words[1:])
+        user_id = get_telegram_user_id(message=message)
+
+        response = "✅The category name has been added."
+
+        try:
+            await self._finance_api_client.add_category(
+                user_id=user_id,
+                category_name=category_name,
+            )
+        except AiohttpClientResponseError:
+            response = "❌Server error! (enter a command /help)"
+
+        await send_telegram_message(
+            message=message,
+            message_text=response,
+        )
