@@ -1,14 +1,15 @@
-FROM python:3.12
-
-RUN pip install -U pip
-RUN pip install pip-tools
+FROM python:3.12-alpine
 
 WORKDIR /app
 
+ENV PYTHONPATH=/app:/app/src
+
+RUN pip install -U pip & pip install pip-tools
+
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
-ENV PYTHONPATH=/app:/app/src
-COPY . .
+
+COPY ./src ./src
 
 CMD ["python", "-m", "src"]
 
