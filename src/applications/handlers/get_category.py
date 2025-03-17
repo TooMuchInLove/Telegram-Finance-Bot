@@ -5,7 +5,7 @@ from src.db.repositories import AccountRepository, CategoryRepository
 from src.db.db import DbContext
 
 
-class GetCategoriesQuery(BaseModel):
+class GetCategoryQuery(BaseModel):
     telegram_user_id: int
 
 
@@ -21,7 +21,7 @@ class Category(BaseModel):
     details: list[CategoryDetail]
 
 
-class GetCategoriesHandler:
+class GetCategoryHandler:
     def __init__(
         self,
         db_context: DbContext,
@@ -32,7 +32,7 @@ class GetCategoriesHandler:
         self._account_repository = account_repository
         self._category_repository = category_repository
 
-    async def handle(self, query: GetCategoriesQuery) -> list[Category]:
+    async def handle(self, query: GetCategoryQuery) -> list[Category]:
         account = await self._account_repository.get_account_by_telegram_user_id(
             telegram_user_id=query.telegram_user_id,
         )

@@ -1,6 +1,6 @@
 from marshmallow import fields
 
-from src.api.schemas import Schema, CamelCaseSchema
+from src.api.schemas import CamelCaseSchema
 
 
 class TelegramUserIdSchema(CamelCaseSchema):

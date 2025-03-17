@@ -6,7 +6,7 @@ from src.telegram_bot.ui import get_inline_buttons_for_categories
 from src.telegram_bot.utils import send_telegram_message, get_telegram_user_id
 
 
-class GetCategoriesHandler(AbcHandler):
+class GetCategoryHandler(AbcHandler):
     def __init__(
         self,
         finance_api_client: FinanceApiClient,
@@ -22,7 +22,7 @@ class GetCategoriesHandler(AbcHandler):
         data_for_buttons = []
 
         try:
-            response = await self._finance_api_client.get_categories(user_id=user_id)
+            response = await self._finance_api_client.get_category(user_id=user_id)
 
             if not response:
                 response = "‼️You don't have any categories."

@@ -24,6 +24,12 @@ def get_inline_buttons_for_main_list() -> InlineKeyboardMarkup:
                 callback_data=ShowListButtonCallbackData(slug=ShowListButton.get_categories).pack()
             ),
         ],
+        [
+            InlineKeyboardButton(
+                text="3. Wallets",
+                callback_data=ShowListButtonCallbackData(slug=ShowListButton.get_wallets).pack()
+            ),
+        ]
     ]
 
     return InlineKeyboardMarkup(inline_keyboard=buttons)

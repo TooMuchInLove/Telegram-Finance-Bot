@@ -1,7 +1,8 @@
-from .schemas import AccountDB, CategoryDB, CategoryDetailDB
-from .account import AccountRepository
-from .category import CategoryRepository
-from .category_detail import CategoryDetailRepository
+from src.db.repositories.schemas import AccountDB, CategoryDB, CategoryDetailDB, WalletDB
+from src.db.repositories.account import AccountRepository
+from src.db.repositories.category import CategoryRepository
+from src.db.repositories.category_detail import CategoryDetailRepository
+from src.db.repositories.wallet import WalletRepository
 
 
 __all__ = (
@@ -11,4 +12,6 @@ __all__ = (
     "CategoryRepository",
     "CategoryDetailDB",
     "CategoryDetailRepository",
+    "WalletDB",
+    "WalletRepository",
 )

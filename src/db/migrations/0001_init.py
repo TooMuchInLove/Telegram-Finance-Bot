@@ -56,7 +56,7 @@ steps = [
         """
             CREATE TABLE wallet (
                 name VARCHAR(100) NOT NULL CHECK (LENGTH(name) > 1),
-                current_score DECIMAL NOT NULL DEFAULT 0.0,
+                current_amount DECIMAL NOT NULL DEFAULT 0.0,
                 account_id INT REFERENCES account(id),
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (name, account_id)

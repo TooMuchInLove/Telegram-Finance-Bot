@@ -5,10 +5,14 @@ from .handlers import (
     AddCategoryHandler,
     AddCategoryDetailCommand,
     AddCategoryDetailHandler,
+    AddWalletCommand,
+    AddWalletHandler,
     DeleteCategoryCommand,
     DeleteCategoryHandler,
-    GetCategoriesQuery,
-    GetCategoriesHandler,
+    GetCategoryQuery,
+    GetCategoryHandler,
+    GetWalletQuery,
+    GetWalletHandler,
 )
 
 __all__ = (
@@ -18,8 +22,12 @@ __all__ = (
     "AddCategoryHandler",
     "AddCategoryDetailCommand",
     "AddCategoryDetailHandler",
+    "AddWalletCommand",
+    "AddWalletHandler",
     "DeleteCategoryCommand",
     "DeleteCategoryHandler",
-    "GetCategoriesQuery",
-    "GetCategoriesHandler",
+    "GetCategoryQuery",
+    "GetCategoryHandler",
+    "GetWalletQuery",
+    "GetWalletHandler",
 )

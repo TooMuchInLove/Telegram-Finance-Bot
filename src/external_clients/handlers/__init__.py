@@ -1,11 +1,11 @@
-from .add_account import AddAccountHandler
-from .add_category import AddCategoryHandler
-from .delete_category import DeleteCategoryHandler
-from .get_categories import GetCategoriesHandler
+from src.external_clients.handlers.add_account import AddAccountHandler
+from src.external_clients.handlers.add_category import AddCategoryHandler
+from src.external_clients.handlers.delete_category import DeleteCategoryHandler
+from src.external_clients.handlers.get_category import GetCategoryHandler
 
 __all__ = (
     "AddAccountHandler",
     "AddCategoryHandler",
     "DeleteCategoryHandler",
-    "GetCategoriesHandler",
+    "GetCategoryHandler",
 )

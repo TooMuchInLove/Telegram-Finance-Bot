@@ -35,13 +35,13 @@ class AddAccountHandler(AbcHandler):
             f"I'm a bot @{setting_bot.NAME}\n\n"
             "<b>Check out the list of my commands</b>:\n"
             "(Getting started: /start)\n"
-            # "1. Enter category: /add_category 'category_name'\n"
-            # "2. View the list of current categories: /get_categories\n"
+            "1. Enter category: /add_category 'category_name'\n"
+            "2. View the list of current categories: /get_categories\n"
             # "3. View the status of the accounts: /account\n"
-            "4. View expenses for the day/month: /day_expenses /monthly_expenses\n"
-            "5. View earnings for the day/month: /daily_income /monthly_income\n"
-            "6. Enter expenses: /add_expenses\n"
-            "7. Enter the income: /add_income\n"
+            # "4. View expenses for the day/month: /day_expenses /monthly_expenses\n"
+            # "5. View earnings for the day/month: /daily_income /monthly_income\n"
+            # "6. Enter expenses: /add_expenses\n"
+            # "7. Enter the income: /add_income\n"
         )
 
         try:

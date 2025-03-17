@@ -1,29 +1,30 @@
+from decimal import Decimal
 from datetime import datetime, timezone
 
 from src.db.exceptions import AccountNotFoundException
 from src.db.helpers import BaseModel
-from src.db.repositories import AccountRepository, CategoryDetailDB, CategoryDetailRepository
+from src.db.repositories import AccountRepository, WalletDB, WalletRepository
 from src.db.db import DbContext
 
 
-class AddCategoryDetailCommand(BaseModel):
+class AddWalletCommand(BaseModel):
     telegram_user_id: int
     name: str
-    category_name: str
+    current_amount: Decimal
 
 
-class AddCategoryDetailHandler:
+class AddWalletHandler:
     def __init__(
         self,
         db_context: DbContext,
         account_repository: AccountRepository,
-        category_detail_repository: CategoryDetailRepository,
+        wallet_repository: WalletRepository,
     ) -> None:
         self._db_context = db_context
         self._account_repository = account_repository
-        self._category_detail_repository = category_detail_repository
+        self._wallet_repository = wallet_repository
 
-    async def handle(self, commands: AddCategoryDetailCommand) -> None:
+    async def handle(self, commands: AddWalletCommand) -> None:
         current_datetime = datetime.now(tz=timezone.utc)
 
         account = await self._account_repository.get_account_by_telegram_user_id(
@@ -32,10 +33,10 @@ class AddCategoryDetailHandler:
         if account is None:
             raise AccountNotFoundException()
 
-        await self._category_detail_repository.insert_category_detail(
-            item=CategoryDetailDB(
+        await self._wallet_repository.insert_wallet(
+            item=WalletDB(
                 name=commands.name,
-                category_name=commands.category_name,
+                current_amount=commands.current_amount,
                 account_id=account.id,
                 created_at=current_datetime,
             ),

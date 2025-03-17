@@ -3,7 +3,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 from loguru import logger
 
-from src.external_clients import FinanceApiClient, AddAccountHandler, DeleteCategoryHandler, GetCategoriesHandler
+from src.external_clients import FinanceApiClient, AddAccountHandler, DeleteCategoryHandler, GetCategoryHandler
 from src.telegram_bot.callback_data import (
     ShowListButton,
     ShowMainButton,
@@ -41,7 +41,7 @@ async def callback_categories_refresh(
     await query.answer()
     user_id = get_telegram_user_id(query)
     logger.debug(f"The user #{user_id} clicked the 'refresh' button.")
-    await GetCategoriesHandler(finance_api_client).handle(message=query, is_update=True)
+    await GetCategoryHandler(finance_api_client).handle(message=query, is_update=True)
 
 
 @router.callback_query(
@@ -70,7 +70,7 @@ async def callback_add_categories(
     await query.answer()
     user_id = get_telegram_user_id(query)
     logger.debug(f"The user #{user_id} clicked the 'add_category' button.")
-    # await GetCategoriesHandler(finance_api_client).handle(message=query, is_update=True)
+    # await GetCategoryHandler(finance_api_client).handle(message=query, is_update=True)
     await state.set_state(StateAddCategory.info)
     # await state.update_data(info=query.data)
     await send_telegram_message(
@@ -91,4 +91,4 @@ async def callback_get_categories(
     await query.answer()
     user_id = get_telegram_user_id(query)
     logger.debug(f"The user #{user_id} clicked the 'get_categories' button.")
-    await GetCategoriesHandler(finance_api_client).handle(message=query, is_update=True)
+    await GetCategoryHandler(finance_api_client).handle(message=query, is_update=True)

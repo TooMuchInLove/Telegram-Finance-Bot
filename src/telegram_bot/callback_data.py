@@ -6,6 +6,7 @@ from aiogram.filters.callback_data import CallbackData
 class ShowListButton(IntEnum):
     add_category = auto()
     get_categories = auto()
+    get_wallets = auto()
 
 
 class ShowMainButton(IntEnum):

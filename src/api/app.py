@@ -17,11 +17,13 @@ from src.applications import (
     AddAccountHandler,
     AddCategoryHandler,
     AddCategoryDetailHandler,
+    AddWalletHandler,
     DeleteCategoryHandler,
-    GetCategoriesHandler,
+    GetCategoryHandler,
+    GetWalletHandler,
 )
 from src.configs import config_map, setting_base, setting_data_base
-from src.db.repositories import AccountRepository, CategoryRepository, CategoryDetailRepository
+from src.db.repositories import AccountRepository, CategoryRepository, CategoryDetailRepository, WalletRepository
 from src.db.db import DbContext, get_db_pool
 from src.external_clients import FinanceApiClient
 
@@ -67,6 +69,15 @@ async def _setup_di(app: WebApplication) -> None:
 
     app["category_detail_repository"] = resolve_category_detail_repository
 
+    def resolve_wallet_repository(
+        db_context: DbContext | None = None,
+    ) -> WalletRepository:
+        if not db_context:
+            db_context = DbContext(app["db_pool"])
+        return WalletRepository(db_context)
+
+    app["wallet_repository"] = resolve_wallet_repository
+
     def resolve_add_account_handler(
         db_context: DbContext | None = None,
     ) -> AddAccountHandler:
@@ -92,19 +103,6 @@ async def _setup_di(app: WebApplication) -> None:
 
     app["add_category_handler"] = resolve_add_category_handler
 
-    def resolve_add_category_detail_handler(
-        db_context: DbContext | None = None,
-    ) -> AddCategoryDetailHandler:
-        if not db_context:
-            db_context = DbContext(app["db_pool"])
-        return AddCategoryDetailHandler(
-            db_context=db_context,
-            account_repository=app["account_repository"](db_context),
-            category_detail_repository=app["category_detail_repository"](db_context),
-        )
-
-    app["add_category_detail_handler"] = resolve_add_category_detail_handler
-
     def resolve_delete_category_handler(
         db_context: DbContext | None = None,
     ) -> DeleteCategoryHandler:
@@ -118,18 +116,57 @@ async def _setup_di(app: WebApplication) -> None:
 
     app["delete_category_handler"] = resolve_delete_category_handler
 
-    def resolve_get_categories_handler(
+    def resolve_get_category_handler(
         db_context: DbContext | None = None,
-    ) -> GetCategoriesHandler:
+    ) -> GetCategoryHandler:
         if not db_context:
             db_context = DbContext(app["db_pool"])
-        return GetCategoriesHandler(
+        return GetCategoryHandler(
             db_context=db_context,
             account_repository=app["account_repository"](db_context),
             category_repository=app["category_repository"](db_context),
         )
 
-    app["get_categories_handler"] = resolve_get_categories_handler
+    app["get_category_handler"] = resolve_get_category_handler
+
+    def resolve_add_category_detail_handler(
+        db_context: DbContext | None = None,
+    ) -> AddCategoryDetailHandler:
+        if not db_context:
+            db_context = DbContext(app["db_pool"])
+        return AddCategoryDetailHandler(
+            db_context=db_context,
+            account_repository=app["account_repository"](db_context),
+            category_detail_repository=app["category_detail_repository"](db_context),
+        )
+
+    app["add_category_detail_handler"] = resolve_add_category_detail_handler
+
+    def resolve_add_wallet_handler(
+        db_context: DbContext | None = None,
+    ) -> AddWalletHandler:
+        if not db_context:
+            db_context = DbContext(app["db_pool"])
+        return AddWalletHandler(
+            db_context=db_context,
+            account_repository=app["account_repository"](db_context),
+            wallet_repository=app["wallet_repository"](db_context),
+        )
+
+    app["add_wallet_handler"] = resolve_add_wallet_handler
+
+    def resolve_get_wallet_handler(
+        db_context: DbContext | None = None,
+    ) -> GetWalletHandler:
+        if not db_context:
+            db_context = DbContext(app["db_pool"])
+        return GetWalletHandler(
+            db_context=db_context,
+            account_repository=app["account_repository"](db_context),
+            wallet_repository=app["wallet_repository"](db_context),
+        )
+
+    app["get_wallet_handler"] = resolve_get_wallet_handler
 
 
 async def _close_db(app: WebApplication) -> None:

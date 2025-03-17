@@ -20,8 +20,8 @@ from src.applications import (
     AddCategoryDetailHandler,
     DeleteCategoryCommand,
     DeleteCategoryHandler,
-    GetCategoriesQuery,
-    GetCategoriesHandler,
+    GetCategoryQuery,
+    GetCategoryHandler,
 )
 from src.db.exceptions import AccountNotFoundException
 
@@ -89,12 +89,12 @@ async def delete_category_handler(request: Request) -> WebResponse:
 @docs()
 @headers_schema(schemas.TelegramUserIdSchema)
 @response_schema(schemas.GetCategoryResponseSchema(many=True))
-async def get_categories_handler(request: Request) -> WebResponse:
-    handler: GetCategoriesHandler = request.app["get_categories_handler"]()
+async def get_category_handler(request: Request) -> WebResponse:
+    handler: GetCategoryHandler = request.app["get_category_handler"]()
 
     try:
         response = await handler.handle(
-            GetCategoriesQuery(
+            GetCategoryQuery(
                 telegram_user_id=request["headers"]["telegram_user_id"],
             ),
         )
@@ -118,7 +118,7 @@ routes = (
     ),
     web_get(
         path="/api/v1/category/",
-        handler=get_categories_handler,
+        handler=get_category_handler,
         allow_head=False,
     ),
     web_post(

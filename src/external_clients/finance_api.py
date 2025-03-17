@@ -40,7 +40,7 @@ class FinanceApiClient(ApiClient):
             name=category_name,
         )
 
-    async def get_categories(
+    async def get_category(
         self,
         user_id: int,
     ) -> ResponseType:
