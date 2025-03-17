@@ -9,6 +9,7 @@ class TelegramUserIdSchema(CamelCaseSchema):
 
 class CategoryRequestSchema(CamelCaseSchema):
     name = fields.String(required=True)
+    category_name = fields.String(required=True)
 
 
 class GetCategoryDetailResponseSchema(CamelCaseSchema):
@@ -21,7 +22,3 @@ class GetCategoryResponseSchema(CamelCaseSchema):
     account_id = fields.Integer()
     created_at = fields.DateTime()
     details = fields.List(fields.Nested(GetCategoryDetailResponseSchema()))
-
-
-class GetCategoriesResponseSchema(Schema):
-    items = fields.List(fields.Nested(GetCategoryResponseSchema()))

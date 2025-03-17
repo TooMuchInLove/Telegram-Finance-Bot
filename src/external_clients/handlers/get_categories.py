@@ -1,9 +1,9 @@
 from src.db.exceptions import ClientResponseError
-from external_clients import FinanceApiClient
-from external_clients.typing import HandleMessage
-from telegram_bot.ui import get_inline_buttons_for_categories
-from telegram_bot.utils import send_telegram_message, get_telegram_user_id
-from .abc_handler import AbcHandler
+from src.external_clients import FinanceApiClient
+from src.external_clients.typing import HandleMessage
+from src.external_clients.handlers.abc_handler import AbcHandler
+from src.telegram_bot.ui import get_inline_buttons_for_categories
+from src.telegram_bot.utils import send_telegram_message, get_telegram_user_id
 
 
 class GetCategoriesHandler(AbcHandler):
@@ -24,7 +24,7 @@ class GetCategoriesHandler(AbcHandler):
         try:
             response = await self._finance_api_client.get_categories(user_id=user_id)
 
-            if not response["items"]:
+            if not response:
                 response = "‼️You don't have any categories."
             else:
                 data_for_buttons = [
@@ -33,7 +33,7 @@ class GetCategoriesHandler(AbcHandler):
                         {"name": category["name"], "account_id": category["accountId"]},
                         {"name": category["name"], "account_id": category["accountId"]},
                     ]
-                    for category in response["items"]
+                    for category in response
                 ]
                 response = f"✅<b>Your categories</b>:\n"
         except ClientResponseError:

@@ -21,10 +21,6 @@ class Category(BaseModel):
     details: list[CategoryDetail]
 
 
-class GetCategoriesResponse(BaseModel):
-    items: list[Category]
-
-
 class GetCategoriesHandler:
     def __init__(
         self,
@@ -36,12 +32,12 @@ class GetCategoriesHandler:
         self._account_repository = account_repository
         self._category_repository = category_repository
 
-    async def handle(self, query: GetCategoriesQuery) -> GetCategoriesResponse:
+    async def handle(self, query: GetCategoriesQuery) -> list[Category]:
         account = await self._account_repository.get_account_by_telegram_user_id(
             telegram_user_id=query.telegram_user_id,
         )
         if not account:
-            return GetCategoriesResponse(items=[])
+            return []
 
         categories = await self._category_repository.get_categories_by_account_id(
             account_id=account.id,
@@ -63,4 +59,4 @@ class GetCategoriesHandler:
                 )
             )
 
-        return GetCategoriesResponse(items=list(items.values()))
+        return list(items.values())

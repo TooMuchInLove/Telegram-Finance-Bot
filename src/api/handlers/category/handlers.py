@@ -50,6 +50,26 @@ async def add_category_handler(request: Request) -> WebResponse:
 @docs()
 @headers_schema(schemas.TelegramUserIdSchema)
 @json_schema(schemas.CategoryRequestSchema)
+async def add_category_detail_handler(request: Request) -> WebResponse:
+    handler: AddCategoryDetailHandler = request.app["add_category_detail_handler"]()
+
+    try:
+        await handler.handle(
+            AddCategoryDetailCommand(
+                telegram_user_id=request["headers"]["telegram_user_id"],
+                name=request["json"]["name"],
+                category_name=request["json"]["category_name"],
+            ),
+        )
+    except AccountNotFoundException:
+        return WebHttpNotFound()
+
+    return WebHttpCreated()
+
+
+@docs()
+@headers_schema(schemas.TelegramUserIdSchema)
+@json_schema(schemas.CategoryRequestSchema)
 async def delete_category_handler(request: Request) -> WebResponse:
     handler: DeleteCategoryHandler = request.app["delete_category_handler"]()
 
@@ -68,7 +88,7 @@ async def delete_category_handler(request: Request) -> WebResponse:
 
 @docs()
 @headers_schema(schemas.TelegramUserIdSchema)
-@response_schema(schemas.GetCategoriesResponseSchema)
+@response_schema(schemas.GetCategoryResponseSchema(many=True))
 async def get_categories_handler(request: Request) -> WebResponse:
     handler: GetCategoriesHandler = request.app["get_categories_handler"]()
 
@@ -82,28 +102,9 @@ async def get_categories_handler(request: Request) -> WebResponse:
         return WebHttpNotFound()
 
     return WebHttpOk(
-        body=schemas.GetCategoriesResponseSchema().dumps(response),
+        body=schemas.GetCategoryResponseSchema(many=True).dumps(response),
         content_type="application/json",
     )
-
-
-@docs()
-@headers_schema(schemas.TelegramUserIdSchema)
-@json_schema(schemas.CategoryRequestSchema)
-async def add_category_detail_handler(request: Request) -> WebResponse:
-    handler: AddCategoryDetailHandler = request.app["add_category_detail_handler"]()
-
-    try:
-        await handler.handle(
-            AddCategoryDetailCommand(
-                telegram_user_id=request["headers"]["telegram_user_id"],
-                name=request["json"]["name"],
-            ),
-        )
-    except AccountNotFoundException:
-        return WebHttpNotFound()
-
-    return WebHttpCreated()
 
 
 routes = (

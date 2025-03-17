@@ -1,8 +1,8 @@
 from src.db.exceptions import ClientResponseError
-from external_clients import FinanceApiClient
-from external_clients.typing import HandleMessage
-from telegram_bot.utils import send_telegram_message, get_telegram_user_id, get_the_entered_words
-from .abc_handler import AbcHandler
+from src.external_clients import FinanceApiClient
+from src.external_clients.typing import HandleMessage
+from src.external_clients.handlers.abc_handler import AbcHandler
+from src.telegram_bot.utils import send_telegram_message, get_telegram_user_id, get_the_entered_words
 
 
 class AddCategoryHandler(AbcHandler):

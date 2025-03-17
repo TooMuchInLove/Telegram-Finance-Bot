@@ -1,16 +1,16 @@
-from configs import setting_bot
+from src.configs import setting_bot
 from src.db.exceptions import ClientResponseError
-from external_clients import FinanceApiClient
-from external_clients.typing import HandleMessage
-from telegram_bot.ui import get_inline_buttons_for_main_list
-from telegram_bot.utils import (
+from src.external_clients import FinanceApiClient
+from src.external_clients.typing import HandleMessage
+from src.external_clients.handlers.abc_handler import AbcHandler
+from src.telegram_bot.ui import get_inline_buttons_for_main_list
+from src.telegram_bot.utils import (
     get_telegram_user_id,
     get_telegram_user_name,
     get_telegram_user_link,
     get_telegram_user_nick,
     send_telegram_message,
 )
-from .abc_handler import AbcHandler
 
 
 class AddAccountHandler(AbcHandler):

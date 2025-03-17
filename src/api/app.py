@@ -13,9 +13,15 @@ from aiohttp_cors import (
 from src.api.log import RequestLogger
 from src.api.middlewares import suppress_cancelled_error_middleware
 from src.api.routes import routes
-from src.applications import AddAccountHandler, AddCategoryHandler, DeleteCategoryHandler, GetCategoriesHandler
+from src.applications import (
+    AddAccountHandler,
+    AddCategoryHandler,
+    AddCategoryDetailHandler,
+    DeleteCategoryHandler,
+    GetCategoriesHandler,
+)
 from src.configs import config_map, setting_base, setting_data_base
-from src.db.repositories import AccountRepository, CategoryRepository
+from src.db.repositories import AccountRepository, CategoryRepository, CategoryDetailRepository
 from src.db.db import DbContext, get_db_pool
 from src.external_clients import FinanceApiClient
 
@@ -52,6 +58,15 @@ async def _setup_di(app: WebApplication) -> None:
 
     app["category_repository"] = resolve_category_repository
 
+    def resolve_category_detail_repository(
+        db_context: DbContext | None = None,
+    ) -> CategoryDetailRepository:
+        if not db_context:
+            db_context = DbContext(app["db_pool"])
+        return CategoryDetailRepository(db_context)
+
+    app["category_detail_repository"] = resolve_category_detail_repository
+
     def resolve_add_account_handler(
         db_context: DbContext | None = None,
     ) -> AddAccountHandler:
@@ -76,6 +91,19 @@ async def _setup_di(app: WebApplication) -> None:
         )
 
     app["add_category_handler"] = resolve_add_category_handler
+
+    def resolve_add_category_detail_handler(
+        db_context: DbContext | None = None,
+    ) -> AddCategoryDetailHandler:
+        if not db_context:
+            db_context = DbContext(app["db_pool"])
+        return AddCategoryDetailHandler(
+            db_context=db_context,
+            account_repository=app["account_repository"](db_context),
+            category_detail_repository=app["category_detail_repository"](db_context),
+        )
+
+    app["add_category_detail_handler"] = resolve_add_category_detail_handler
 
     def resolve_delete_category_handler(
         db_context: DbContext | None = None,
