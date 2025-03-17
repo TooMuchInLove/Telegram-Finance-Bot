@@ -10,7 +10,7 @@ steps = [
             CREATE TABLE account (
                 id SERIAL PRIMARY KEY,
                 telegram_user_id BIGINT NOT NULL UNIQUE,
-                telegram_username TEXT NOT NULL UNIQUE,
+                telegram_username VARCHAR(100) NOT NULL UNIQUE,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
         """,
@@ -27,7 +27,7 @@ steps = [
     step(
         """
             CREATE TABLE category (
-                name text NOT NULL,
+                name VARCHAR(100) NOT NULL CHECK (LENGTH(name) >= 3),
                 account_id INT REFERENCES account(id),
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (name, account_id)
@@ -39,31 +39,31 @@ steps = [
     ),
     step(
         """
-            CREATE TABLE custom_digital_accounts (
-                id SERIAL PRIMARY KEY,
+            CREATE TABLE category_detail (
+                name VARCHAR(100) NOT NULL CHECK (LENGTH(name) >= 3),
+                category_name VARCHAR(100) NOT NULL CHECK (LENGTH(name) >= 3),
                 account_id INT REFERENCES account(id),
-                name TEXT NOT NULL,
-                tag TEXT,
-                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (category_name, account_id) REFERENCES category(name, account_id),
+                PRIMARY KEY (name, account_id)
             );
         """,
         """
-            DROP TABLE custom_digital_accounts;
+            DROP TABLE category_detail;
         """,
     ),
     step(
         """
-            CREATE TABLE fixate_expenses (
-                id SERIAL PRIMARY KEY,
-                account_id INT REFERENCES account (id),
-                category_id TEXT REFERENCES category (name),
-                custom_digital_account_id INT REFERENCES custom_digital_accounts (id),
-                amount NUMERIC(100, 2) NOT NULL,
-                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            CREATE TABLE wallet (
+                name VARCHAR(100) NOT NULL CHECK (LENGTH(name) > 1),
+                current_score DECIMAL NOT NULL DEFAULT 0.0,
+                account_id INT REFERENCES account(id),
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (name, account_id)
             );
         """,
         """
-            DROP TABLE fixate_expenses;
+            DROP TABLE wallet;
         """,
     ),
 ]

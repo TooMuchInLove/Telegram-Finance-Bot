@@ -5,7 +5,7 @@ from decimal import Decimal
 from typing import AsyncIterator, Any
 from ujson import loads as ujson_loads, dumps as ujson_dumps
 
-from db.helpers import BaseModel
+from src.db.helpers import BaseModel
 
 
 class DbContext:

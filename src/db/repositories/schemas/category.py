@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from db.helpers import BaseModel
+from src.db.helpers import BaseModel
 
 
 class CategoryDB(BaseModel):

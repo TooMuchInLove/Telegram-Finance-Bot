@@ -4,13 +4,13 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from loguru import logger
 
-from external_clients import (
+from src.external_clients import (
     FinanceApiClient,
     AddAccountHandler,
     AddCategoryHandler,
 )
-from telegram_bot.states import StateAddCategory
-from telegram_bot.utils import get_telegram_user_id
+from src.telegram_bot.states import StateAddCategory
+from src.telegram_bot.utils import get_telegram_user_id
 
 router = Router(name=__name__)
 

@@ -3,15 +3,15 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 from loguru import logger
 
-from external_clients import FinanceApiClient, AddAccountHandler, DeleteCategoryHandler, GetCategoriesHandler
-from telegram_bot.callback_data import (
+from src.external_clients import FinanceApiClient, AddAccountHandler, DeleteCategoryHandler, GetCategoriesHandler
+from src.telegram_bot.callback_data import (
     ShowListButton,
     ShowMainButton,
     ShowListButtonCallbackData,
     ShowCategoriesCallbackData,
 )
-from telegram_bot.states import StateAddCategory
-from telegram_bot.utils import send_telegram_message, get_telegram_user_id
+from src.telegram_bot.states import StateAddCategory
+from src.telegram_bot.utils import send_telegram_message, get_telegram_user_id
 
 router = Router(name=__name__)
 

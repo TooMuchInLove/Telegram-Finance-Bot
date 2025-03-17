@@ -2,7 +2,7 @@ from asyncio import sleep as asyncio_sleep
 
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, Message
 
-from configs import setting_bot
+from src.configs import setting_bot
 
 
 async def send_telegram_message(

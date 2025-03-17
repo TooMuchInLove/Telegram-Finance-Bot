@@ -1,4 +1,4 @@
-from .base_client import ApiClient
+from src.external_clients.base_client import ApiClient
 
 ResponseType = str | list | dict | dict[str, list]
 

@@ -10,14 +10,14 @@ from aiohttp_cors import (
     setup as aiohttp_cors_setup,
 )
 
-from api.log import RequestLogger
-from api.middlewares import suppress_cancelled_error_middleware
-from api.routes import routes
-from applications import AddAccountHandler, AddCategoryHandler, DeleteCategoryHandler, GetCategoriesHandler
-from configs import config_map, setting_base, setting_data_base
-from db.repositories import AccountRepository, CategoryRepository
-from db.db import DbContext, get_db_pool
-from external_clients import FinanceApiClient
+from src.api.log import RequestLogger
+from src.api.middlewares import suppress_cancelled_error_middleware
+from src.api.routes import routes
+from src.applications import AddAccountHandler, AddCategoryHandler, DeleteCategoryHandler, GetCategoriesHandler
+from src.configs import config_map, setting_base, setting_data_base
+from src.db.repositories import AccountRepository, CategoryRepository
+from src.db.db import DbContext, get_db_pool
+from src.external_clients import FinanceApiClient
 
 
 async def _setup_db(app: WebApplication) -> None:

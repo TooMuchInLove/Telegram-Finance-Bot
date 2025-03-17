@@ -10,7 +10,7 @@ import aiohttp
 from aiohttp import hdrs, web
 from yarl import URL
 
-from db.helpers import BaseModel
+from src.db.helpers import BaseModel
 
 ResponseType = str | list | dict | dict[str, list]
 

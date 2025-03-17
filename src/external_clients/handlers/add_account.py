@@ -1,6 +1,7 @@
 from configs import setting_bot
+from src.db.exceptions import ClientResponseError
 from external_clients import FinanceApiClient
-from external_clients.typing import HandleMessage, ClientResponseError
+from external_clients.typing import HandleMessage
 from telegram_bot.ui import get_inline_buttons_for_main_list
 from telegram_bot.utils import (
     get_telegram_user_id,

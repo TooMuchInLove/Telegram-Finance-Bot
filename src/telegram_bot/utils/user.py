@@ -1,4 +1,4 @@
-from aiogram.types import CallbackQuery, Message, User
+from aiogram.types import CallbackQuery, Message
 
 
 def get_telegram_user_id(message: Message | CallbackQuery) -> int:

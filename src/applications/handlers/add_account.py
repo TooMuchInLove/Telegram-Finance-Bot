@@ -1,8 +1,8 @@
 from datetime import datetime, timezone
 
-from db.helpers import BaseModel
-from db.repositories import AccountDB, AccountRepository
-from db.db import DbContext
+from src.db.helpers import BaseModel
+from src.db.repositories import AccountDB, AccountRepository
+from src.db.db import DbContext
 
 
 class AddAccountCommand(BaseModel):

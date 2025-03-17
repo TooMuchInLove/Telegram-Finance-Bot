@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from loguru import logger
 
-from configs import (
+from src.configs import (
     config_map,
     SettingBase,
     SettingBot,
@@ -13,10 +13,10 @@ from configs import (
     setting_data_base,
     check_envs_the_loading,
 )
-from external_clients import FinanceApiClient
-from telegram_bot.routers import router
-from telegram_bot.ui import set_default_menu
-from bot import TelegramBot
+from src.external_clients import FinanceApiClient
+from src.telegram_bot.routers import router
+from src.telegram_bot.ui import set_default_menu
+from src.bot import TelegramBot
 
 
 def setting_logger() -> None:

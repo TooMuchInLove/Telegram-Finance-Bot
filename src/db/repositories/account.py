@@ -1,5 +1,5 @@
 from db.db import DbContext
-from .schemas import AccountDB
+from src.db.repositories.schemas import AccountDB
 
 
 class AccountRepository:

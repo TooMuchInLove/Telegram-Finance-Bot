@@ -2,7 +2,7 @@ from typing import Any
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from telegram_bot.callback_data import (
+from src.telegram_bot.callback_data import (
     ShowListButton,
     ShowMainButton,
     ShowListButtonCallbackData,

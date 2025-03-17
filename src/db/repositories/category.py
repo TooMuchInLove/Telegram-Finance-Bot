@@ -1,5 +1,5 @@
 from db.db import DbContext
-from .schemas import CategoryDB
+from src.db.repositories.schemas import CategoryDB
 
 
 class CategoryRepository:

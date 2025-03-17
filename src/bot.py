@@ -1,7 +1,7 @@
 from aiogram import Dispatcher
 
-from external_clients import FinanceApiClient
-from telegram_bot.middlewares import DIMiddleware
+from src.external_clients import FinanceApiClient
+from src.telegram_bot.middlewares import DIMiddleware
 
 
 class TelegramBot:

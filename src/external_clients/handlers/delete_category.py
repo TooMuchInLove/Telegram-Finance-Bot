@@ -1,5 +1,6 @@
+from src.db.exceptions import ClientResponseError
 from external_clients import FinanceApiClient
-from external_clients.typing import HandleMessage, ClientResponseError
+from external_clients.typing import HandleMessage
 from telegram_bot.utils import send_telegram_message, get_telegram_user_id
 from .abc_handler import AbcHandler
 
