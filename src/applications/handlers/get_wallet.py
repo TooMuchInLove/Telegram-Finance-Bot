@@ -39,7 +39,6 @@ class GetWalletHandler:
         wallets = await self._wallet_repository.get_wallets_by_account_id(
             account_id=account.id,
         )
-        print(f'# wallets: {wallets}')
 
         items = []
         for wallet in wallets:
