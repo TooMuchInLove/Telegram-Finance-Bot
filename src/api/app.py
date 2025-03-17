@@ -13,7 +13,7 @@ from aiohttp_cors import (
 from api.log import RequestLogger
 from api.middlewares import suppress_cancelled_error_middleware
 from api.routes import routes
-from applications import AddAccountHandler, AddCategoryHandler, GetCategoriesHandler
+from applications import AddAccountHandler, AddCategoryHandler, DeleteCategoryHandler, GetCategoriesHandler
 from configs import config_map, setting_base, setting_data_base
 from db.repositories import AccountRepository, CategoryRepository
 from db.db import DbContext, get_db_pool
@@ -76,6 +76,19 @@ async def _setup_di(app: WebApplication) -> None:
         )
 
     app["add_category_handler"] = resolve_add_category_handler
+
+    def resolve_delete_category_handler(
+        db_context: DbContext | None = None,
+    ) -> DeleteCategoryHandler:
+        if not db_context:
+            db_context = DbContext(app["db_pool"])
+        return DeleteCategoryHandler(
+            db_context=db_context,
+            account_repository=app["account_repository"](db_context),
+            category_repository=app["category_repository"](db_context),
+        )
+
+    app["delete_category_handler"] = resolve_delete_category_handler
 
     def resolve_get_categories_handler(
         db_context: DbContext | None = None,

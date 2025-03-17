@@ -1,20 +1,27 @@
 from marshmallow import fields
 
-from api.schemas import CamelCaseSchema
+from src.api.schemas import Schema, CamelCaseSchema
 
 
 class TelegramUserIdSchema(CamelCaseSchema):
     telegram_user_id = fields.Integer(required=True)
 
 
-class AddCategoryRequestSchema(CamelCaseSchema):
+class CategoryRequestSchema(CamelCaseSchema):
     name = fields.String(required=True)
 
 
-class GetCategoryResponseSchema(CamelCaseSchema):
+class GetCategoryDetailResponseSchema(CamelCaseSchema):
     name = fields.String()
     created_at = fields.DateTime()
 
 
-class GetCategoriesResponseSchema(CamelCaseSchema):
+class GetCategoryResponseSchema(CamelCaseSchema):
+    name = fields.String()
+    account_id = fields.Integer()
+    created_at = fields.DateTime()
+    details = fields.List(fields.Nested(GetCategoryDetailResponseSchema()))
+
+
+class GetCategoriesResponseSchema(Schema):
     items = fields.List(fields.Nested(GetCategoryResponseSchema()))

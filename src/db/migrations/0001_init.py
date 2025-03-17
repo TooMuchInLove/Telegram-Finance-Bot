@@ -18,7 +18,7 @@ steps = [
             DROP TABLE account;
         """,
         """
-            CREATE INDEX index_telegram_user_id ON account (telegram_user_id);
+            CREATE INDEX index_telegram_user_id ON account(telegram_user_id);
         """,
         """
             DROP INDEX index_telegram_user_id;
@@ -26,22 +26,22 @@ steps = [
     ),
     step(
         """
-            CREATE TABLE categories (
+            CREATE TABLE category (
                 name text NOT NULL,
-                account_id INT REFERENCES account (id),
+                account_id INT REFERENCES account(id),
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (name, account_id)
             );
         """,
         """
-            DROP TABLE categories;
+            DROP TABLE category;
         """,
     ),
     step(
         """
             CREATE TABLE custom_digital_accounts (
                 id SERIAL PRIMARY KEY,
-                account_id INT REFERENCES account (id),
+                account_id INT REFERENCES account(id),
                 name TEXT NOT NULL,
                 tag TEXT,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -56,7 +56,7 @@ steps = [
             CREATE TABLE fixate_expenses (
                 id SERIAL PRIMARY KEY,
                 account_id INT REFERENCES account (id),
-                category_id TEXT REFERENCES categories (name),
+                category_id TEXT REFERENCES category (name),
                 custom_digital_account_id INT REFERENCES custom_digital_accounts (id),
                 amount NUMERIC(100, 2) NOT NULL,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

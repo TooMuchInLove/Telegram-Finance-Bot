@@ -3,6 +3,10 @@ from .handlers import (
     AddAccountHandler,
     AddCategoryCommand,
     AddCategoryHandler,
+    AddCategoryDetailCommand,
+    AddCategoryDetailHandler,
+    DeleteCategoryCommand,
+    DeleteCategoryHandler,
     GetCategoriesQuery,
     GetCategoriesHandler,
 )
@@ -12,6 +16,10 @@ __all__ = (
     "AddAccountHandler",
     "AddCategoryCommand",
     "AddCategoryHandler",
+    "AddCategoryDetailCommand",
+    "AddCategoryDetailHandler",
+    "DeleteCategoryCommand",
+    "DeleteCategoryHandler",
     "GetCategoriesQuery",
     "GetCategoriesHandler",
 )

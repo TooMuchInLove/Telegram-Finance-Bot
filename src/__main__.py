@@ -3,7 +3,16 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from loguru import logger
 
-from configs import config_map, setting_base, setting_bot, setting_data_base
+from configs import (
+    config_map,
+    SettingBase,
+    SettingBot,
+    SettingsDataBase,
+    setting_base,
+    setting_bot,
+    setting_data_base,
+    check_envs_the_loading,
+)
 from external_clients import FinanceApiClient
 from telegram_bot.routers import router
 from telegram_bot.ui import set_default_menu
@@ -12,12 +21,6 @@ from bot import TelegramBot
 
 def setting_logger() -> None:
     logger.configure(**config_map)
-
-
-def check_envs_the_loading() -> None:
-    setting_base.checking_the_loading_of_arguments()
-    setting_bot.checking_the_loading_of_arguments()
-    setting_data_base.checking_the_loading_of_arguments()
 
 
 async def main() -> None:
@@ -46,7 +49,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     setting_logger()
-    check_envs_the_loading()
+    check_envs_the_loading(instances=[SettingBase, SettingBot, SettingsDataBase])
     logger.info("Starting...")
     try:
         asyncio_run(main())

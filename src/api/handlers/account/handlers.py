@@ -2,14 +2,13 @@ from aiohttp.web import (
     Response as WebResponse,
     HTTPOk as WebHttpOk,
     post as web_post,
-    get as web_get,
 )
 from aiohttp.abc import Request
 from aiohttp_apispec import docs, json_schema
 from functools import partial
 
-from applications import AddAccountCommand, AddAccountHandler
-from . import schemas
+from src.api.handlers.account import schemas
+from src.applications import AddAccountCommand, AddAccountHandler
 
 docs = partial(docs, tags=["Account"])
 

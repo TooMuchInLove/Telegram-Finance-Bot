@@ -9,9 +9,16 @@ class GetCategoriesQuery(BaseModel):
     telegram_user_id: int
 
 
-class Category(BaseModel):
+class CategoryDetail(BaseModel):
     name: str
     created_at: datetime
+
+
+class Category(BaseModel):
+    name: str
+    account_id: int
+    created_at: datetime
+    details: list[CategoryDetail]
 
 
 class GetCategoriesResponse(BaseModel):
@@ -40,13 +47,20 @@ class GetCategoriesHandler:
             account_id=account.id,
         )
 
-        items = []
+        items = {}
         for category in categories:
-            items.append(
-                Category(
+            if category.name not in items:
+                items[category.name] = Category(
                     name=category.name,
+                    account_id=account.id,
                     created_at=category.created_at,
+                    details=[],
+                )
+            items[category.name].details.append(
+                CategoryDetail(
+                    name=category.detail_name,
+                    created_at=category.detail_created_at,
                 )
             )
 
-        return GetCategoriesResponse(items=items)
+        return GetCategoriesResponse(items=list(items.values()))

@@ -1,6 +1,6 @@
 from marshmallow import fields
 
-from api.schemas import CamelCaseSchema
+from src.api.schemas import CamelCaseSchema
 
 
 class SignInRequestSchema(CamelCaseSchema):

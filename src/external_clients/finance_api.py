@@ -29,6 +29,17 @@ class FinanceApiClient(ApiClient):
             name=category_name,
         )
 
+    async def delete_category(
+        self,
+        user_id: int,
+        category_name: str,
+    ) -> ResponseType:
+        return await self._delete(
+            path="api/v1/category/",
+            headers={"telegramUserId": f"{user_id}"},
+            name=category_name,
+        )
+
     async def get_categories(
         self,
         user_id: int,

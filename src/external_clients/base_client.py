@@ -174,6 +174,21 @@ class ApiClient:
             data=kwargs if not is_json else None,
         )
 
+    async def _delete(
+        self,
+        path: str | None = "",
+        headers: dict[str, Any] = None,
+        is_json: bool = True,
+        **kwargs,
+    ) -> ResponseType:
+        return await self._request(
+            method=hdrs.METH_DELETE,
+            path=path,
+            headers=headers,
+            json=kwargs if is_json else None,
+            data=kwargs if not is_json else None,
+        )
+
     async def __aenter__(self) -> Self:
         return self
 

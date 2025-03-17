@@ -3,10 +3,8 @@ from datetime import datetime
 from db.helpers import BaseModel
 
 
-class CategoryDB(BaseModel):
+class CategoryDetailDB(BaseModel):
     name: str
+    category_name: str
     account_id: int
     created_at: datetime
-
-    detail_name: str | None = None
-    detail_created_at: datetime | None = None

@@ -8,7 +8,7 @@ class CategoryRepository:
 
     async def insert_category(self, item: CategoryDB) -> None:
         query = (
-            "INSERT INTO categories (name, account_id, created_at) "
+            "INSERT INTO category (name, account_id, created_at) "
             "VALUES ($1, $2, $3) ON CONFLICT DO NOTHING;"
         )
 
@@ -20,10 +20,20 @@ class CategoryRepository:
                 item.created_at.replace(tzinfo=None)
             )
 
+    async def delete_category(self, name: str, account_id: int) -> None:
+        query = (
+            "DELETE FROM category c "
+            "WHERE c.account_id = $1 AND c.name = $2;"
+        )
+
+        async with self._db_context.get_connection() as connection:
+            await connection.execute(query, account_id, name)
+
     async def get_categories_by_account_id(self, account_id: int) -> list[CategoryDB]:
         query = (
-            "SELECT c.* "
-            "FROM categories c "
+            "SELECT c.*, cd.name detail_name, cd.created_at detail_created_at "
+            "FROM category c "
+            "JOIN category_detail cd ON c.name = cd.category_name "
             "WHERE c.account_id = $1;"
         )
 

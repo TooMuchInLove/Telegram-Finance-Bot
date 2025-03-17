@@ -23,10 +23,6 @@ class SettingBase(Settings):
     WEB_APP_URL = os_environ.get("BASE_WEB_APP_URL")
     FINANCE_API_CLIENT_URL = os_environ.get("BASE_FINANCE_API_CLIENT_URL")
 
-    def checking_the_loading_of_arguments(self) -> None:
-        self.print_logs(self.WEB_PORT, "BASE_WEB_PORT")
-        self.print_logs(self.FINANCE_API_CLIENT_URL, "BASE_FINANCE_API_CLIENT_URL")
-
 
 @dataclass(slots=True, frozen=True)
 class SettingBot(Settings):
@@ -38,13 +34,6 @@ class SettingBot(Settings):
     PROXY_LOGIN = os_environ.get("TELEGRAM_PROXY_LOGIN")
     PROXY_PASSWORD = os_environ.get("TELEGRAM_PROXY_PASSWORD")
     TIMEOUT_DELETE_MESSAGE = int(os_environ.get("TELEGRAM_TIMEOUT_DELETE_MESSAGE"))
-
-    def checking_the_loading_of_arguments(self) -> None:
-        self.print_logs(self.TOKEN, "TELEGRAM_BOT_TOKEN")
-        self.print_logs(self.PROXY_URL, "TELEGRAM_PROXY_URL")
-        self.print_logs(self.PROXY_LOGIN, "TELEGRAM_PROXY_LOGIN")
-        self.print_logs(self.PROXY_PASSWORD, "TELEGRAM_PROXY_PASSWORD")
-        self.print_logs(self.TIMEOUT_DELETE_MESSAGE, "TELEGRAM_TIMEOUT_DELETE_MESSAGE")
 
 
 @dataclass(slots=True, frozen=True)
@@ -64,15 +53,15 @@ class SettingsDataBase(Settings):
     def dsn(self) -> str:
         return f"postgresql://{self.USER}:{self.PASSWORD}@{self.HOST}:{self.PORT}/{self.NAME}"
 
-    def checking_the_loading_of_arguments(self) -> None:
-        self.print_logs(self.HOST, "DATABASE_HOST")
-        self.print_logs(self.PORT, "DATABASE_PORT")
-        self.print_logs(self.USER, "DATABASE_USER")
-        self.print_logs(self.PASSWORD, "DATABASE_PASSWORD")
-        self.print_logs(self.NAME, "DATABASE_NAME")
-        self.print_logs(self.POOL_MIN_SIZE, "DATABASE_POOL_MIN_SIZE")
-        self.print_logs(self.POOL_MAX_SIZE, "DATABASE_POOL_MAX_SIZE")
-        self.print_logs(self.COMMAND_TIMEOUT, "DATABASE_COMMAND_TIMEOUT")
+
+def check_envs_the_loading(instances: list[type[Settings]]) -> None:
+    for instance in instances:
+        fields = [
+            v for v in instance.__dict__.keys()
+            if not v.startswith("__") and not callable(getattr(instance, v))
+        ]
+        for field in fields:
+            instance.print_logs(argument=getattr(instance, field), argument_name=field)
 
 
 setting_base = SettingBase()
