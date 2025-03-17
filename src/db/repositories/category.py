@@ -33,7 +33,7 @@ class CategoryRepository:
         query = (
             "SELECT c.*, cd.name detail_name, cd.created_at detail_created_at "
             "FROM category c "
-            "JOIN category_detail cd ON c.name = cd.category_name "
+            "JOIN category_detail cd ON c.name = cd.category_name AND c.account_id = cd.account_id "
             "WHERE c.account_id = $1;"
         )
 
